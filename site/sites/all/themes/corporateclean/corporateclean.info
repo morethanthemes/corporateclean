@@ -37,3 +37,9 @@ settings[slideshow_wrap]= 0
 settings[slideshow_pause]= 0
 settings[responsive_meta]= 1
 settings[responsive_respond]= 0
+
+; Information added by drupal.org packaging script on 2013-02-07
+version = "7.x-2.1"
+core = "7.x"
+project = "corporateclean"
+datestamp = "1360244054"
