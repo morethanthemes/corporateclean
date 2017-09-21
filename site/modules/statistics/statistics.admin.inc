@@ -59,7 +59,7 @@ function statistics_recent_hits() {
  * statistics settings form, but is dependent on cron running.
  *
  * @return
- *   A render array containing information about the the top pages.
+ *   A render array containing information about the top pages.
  */
 function statistics_top_pages() {
   $header = array(
@@ -137,7 +137,8 @@ function statistics_top_visitors() {
     ->groupBy('u.name')
     ->groupBy('bl.iid')
     ->limit(30)
-    ->orderByHeader($header);
+    ->orderByHeader($header)
+    ->orderBy('a.hostname');
 
   $uniques_query = db_select('accesslog')->distinct();
   $uniques_query->fields('accesslog', array('uid', 'hostname'));
@@ -263,9 +264,7 @@ function statistics_access_log($aid) {
     );
     return $build;
   }
-  else {
-    drupal_not_found();
-  }
+  return MENU_NOT_FOUND;
 }
 
 /**
@@ -304,6 +303,17 @@ function statistics_settings_form() {
     '#title' => t('Count content views'),
     '#default_value' => variable_get('statistics_count_content_views', 0),
     '#description' => t('Increment a counter each time content is viewed.'),
+  );
+  $form['content']['statistics_count_content_views_ajax'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use Ajax to increment the counter'),
+    '#default_value' => variable_get('statistics_count_content_views_ajax', 0),
+    '#description' => t('Perform the count asynchronously after page load rather than during page generation.'),
+    '#states' => array(
+      'disabled' => array(
+        ':input[name="statistics_count_content_views"]' => array('checked' => FALSE),
+      ),
+    ),
   );
 
   return system_settings_form($form);

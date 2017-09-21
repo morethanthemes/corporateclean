@@ -29,7 +29,9 @@ function update_manual_status() {
 }
 
 /**
- * Batch callback: Processes a step in batch for fetching available update data.
+ * Implements callback_batch_operation().
+ *
+ * Processes a step in batch for fetching available update data.
  *
  * @param $context
  *   Reference to an array used for Batch API storage.
@@ -77,7 +79,9 @@ function update_fetch_data_batch(&$context) {
 }
 
 /**
- * Batch callback: Performs actions when all fetch tasks have been completed.
+ * Implements callback_batch_finished().
+ *
+ * Performs actions when all fetch tasks have been completed.
  *
  * @param $success
  *   TRUE if the batch operation was successful; FALSE if there were errors.
@@ -289,7 +293,7 @@ function _update_build_fetch_url($project, $site_key = '') {
   $url = _update_get_fetch_url_base($project);
   $url .= '/' . $name . '/' . DRUPAL_CORE_COMPATIBILITY;
 
-  // Only append usage infomation if we have a site key and the project is
+  // Only append usage information if we have a site key and the project is
   // enabled. We do not want to record usage statistics for disabled projects.
   if (!empty($site_key) && (strpos($project['project_type'], 'disabled') === FALSE)) {
     // Append the site key.

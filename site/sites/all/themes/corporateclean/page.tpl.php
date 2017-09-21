@@ -278,6 +278,7 @@
        
     </div><!-- EOF: #footer-bottom-inside -->
     
+    <?php if (theme_get_setting('credits_display','corporateclean')): ?>
     <!-- #credits -->   
     <div id="credits" class="container_12 clearfix">
         <div class="grid_12">
@@ -285,5 +286,6 @@
         </div>
     </div>
     <!-- EOF: #credits -->
+    <?php endif; ?>
 
 </div><!-- EOF: #footer -->

@@ -9,7 +9,7 @@
  * Implements Drupal.behaviors for the Dashboard module.
  */
 Drupal.behaviors.dashboard = {
-    attach: function (context, settings) {
+  attach: function (context, settings) {
     $('#dashboard', context).once(function () {
       $(this).prepend('<div class="customize clearfix"><ul class="action-links"><li><a href="#">' + Drupal.t('Customize dashboard') + '</a></li></ul><div class="canvas"></div></div>');
       $('.customize .action-links a', this).click(Drupal.behaviors.dashboard.enterCustomizeMode);
@@ -32,13 +32,13 @@ Drupal.behaviors.dashboard = {
           empty_text = Drupal.settings.dashboard.emptyRegionTextInactive;
         }
         // We need a placeholder.
-        if ($('.placeholder', this).length == 0) {
-          $(this).append('<div class="placeholder"></div>');
+        if ($('.dashboard-placeholder', this).length == 0) {
+          $(this).append('<div class="dashboard-placeholder"></div>');
         }
-        $('.placeholder', this).html(empty_text);
+        $('.dashboard-placeholder', this).html(empty_text);
       }
       else {
-        $('.placeholder', this).remove();
+        $('.dashboard-placeholder', this).remove();
       }
     });
   },

@@ -362,7 +362,8 @@ function install_run_tasks(&$install_state) {
  * Runs an individual installation task.
  *
  * @param $task
- *   An array of information about the task to be run.
+ *   An array of information about the task to be run as returned by
+ *   hook_install_tasks().
  * @param $install_state
  *   An array of information about the current installation state. This is
  *   passed in by reference so that it can be modified by the task.
@@ -478,11 +479,15 @@ function install_run_task($task, &$install_state) {
  * the page request evolves (for example, if an installation profile hasn't
  * been selected yet, we don't yet know which profile tasks need to be run).
  *
+ * You can override this using hook_install_tasks() or
+ * hook_install_tasks_alter().
+ *
  * @param $install_state
  *   An array of information about the current installation state.
  *
  * @return
- *   A list of tasks to be performed, with associated metadata.
+ *   A list of tasks to be performed, with associated metadata as returned by
+ *   hook_install_tasks().
  */
 function install_tasks_to_perform($install_state) {
   // Start with a list of all currently available tasks.
@@ -692,6 +697,21 @@ function install_full_redirect_url($install_state) {
  */
 function install_display_output($output, $install_state) {
   drupal_page_header();
+
+  // Prevent install.php from being indexed when installed in a sub folder.
+  // robots.txt rules are not read if the site is within domain.com/subfolder
+  // resulting in /subfolder/install.php being found through search engines.
+  // When settings.php is writeable this can be used via an external database
+  // leading a malicious user to gain php access to the server.
+  $noindex_meta_tag = array(
+    '#tag' => 'meta',
+    '#attributes' => array(
+      'name' => 'robots',
+      'content' => 'noindex, nofollow',
+    ),
+  );
+  drupal_add_html_head($noindex_meta_tag, 'install_meta_robots');
+
   // Only show the task list if there is an active task; otherwise, the page
   // request has ended before tasks have even been started, so there is nothing
   // meaningful to show.
@@ -766,6 +786,15 @@ function install_system_module(&$install_state) {
   // Install system.module.
   drupal_install_system();
 
+  // Call file_ensure_htaccess() to ensure that all of Drupal's standard
+  // directories (e.g., the public and private files directories) have
+  // appropriate .htaccess files. These directories will have already been
+  // created by this point in the installer, since Drupal creates them during
+  // the install_verify_requirements() task. Note that we cannot call
+  // file_ensure_htaccess() any earlier than this, since it relies on
+  // system.module in order to work.
+  file_ensure_htaccess();
+
   // Enable the user module so that sessions can be recorded during the
   // upcoming bootstrap step.
   module_enable(array('user'), FALSE);
@@ -780,6 +809,13 @@ function install_system_module(&$install_state) {
 
   variable_set('install_profile_modules', array_diff($modules, array('system')));
   $install_state['database_tables_exist'] = TRUE;
+
+  // Prevent the hook_requirements() check from telling us to convert the
+  // database to utf8mb4.
+  $connection = Database::getConnection();
+  if ($connection->utf8mb4IsConfigurable() && $connection->utf8mb4IsActive()) {
+    variable_set('drupal_all_databases_are_utf8mb4', TRUE);
+  }
 }
 
 /**
@@ -981,7 +1017,7 @@ function install_settings_form_submit($form, &$form_state) {
     'required' => TRUE,
   );
   $settings['drupal_hash_salt'] = array(
-    'value'    => drupal_hash_base64(drupal_random_bytes(55)),
+    'value'    => drupal_random_key(),
     'required' => TRUE,
   );
   drupal_rewrite_settings($settings);
@@ -1561,7 +1597,9 @@ function install_finished(&$install_state) {
 }
 
 /**
- * Batch callback for batch installation of modules.
+ * Implements callback_batch_operation().
+ *
+ * Performs batch installation of modules.
  */
 function _install_module_batch($module, $module_name, &$context) {
   // Install and enable the module right away, so that the module will be
@@ -1574,6 +1612,8 @@ function _install_module_batch($module, $module_name, &$context) {
 }
 
 /**
+ * Implements callback_batch_finished().
+ *
  * 'Finished' callback for module installation batch.
  */
 function _install_profile_modules_finished($success, $results, $operations) {

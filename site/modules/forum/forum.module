@@ -233,6 +233,8 @@ function forum_entity_info_alter(&$info) {
 }
 
 /**
+ * Implements callback_entity_info_uri().
+ *
  * Entity URI callback used in forum_entity_info_alter().
  */
 function forum_uri($forum) {
@@ -261,10 +263,10 @@ function _forum_node_check_node_type($node) {
  * Implements hook_node_view().
  */
 function forum_node_view($node, $view_mode) {
-  $vid = variable_get('forum_nav_vocabulary', 0);
-  $vocabulary = taxonomy_vocabulary_load($vid);
   if (_forum_node_check_node_type($node)) {
     if ($view_mode == 'full' && node_is_page($node)) {
+      $vid = variable_get('forum_nav_vocabulary', 0);
+      $vocabulary = taxonomy_vocabulary_load($vid);
       // Breadcrumb navigation
       $breadcrumb[] = l(t('Home'), NULL);
       $breadcrumb[] = l($vocabulary->name, 'forum');

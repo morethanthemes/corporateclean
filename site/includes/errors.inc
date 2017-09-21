@@ -9,7 +9,7 @@
  * Maps PHP error constants to watchdog severity levels.
  *
  * The error constants are documented at
- * http://php.net/manual/en/errorfunc.constants.php
+ * http://php.net/manual/errorfunc.constants.php
  *
  * @ingroup logging_severity_levels
  */
@@ -66,7 +66,7 @@ function _drupal_error_handler_real($error_level, $message, $filename, $line, $c
     _drupal_log_error(array(
       '%type' => isset($types[$error_level]) ? $severity_msg : 'Unknown error',
       // The standard PHP error handler considers that the error messages
-      // are HTML. We mimick this behavior here.
+      // are HTML. We mimic this behavior here.
       '!message' => filter_xss_admin($message),
       '%function' => $caller['function'],
       '%file' => $caller['file'],
@@ -114,7 +114,7 @@ function _drupal_decode_exception($exception) {
   return array(
     '%type' => get_class($exception),
     // The standard PHP exception handler considers that the exception message
-    // is plain-text. We mimick this behavior here.
+    // is plain-text. We mimic this behavior here.
     '!message' => check_plain($message),
     '%function' => $caller['function'],
     '%file' => $caller['file'],
@@ -169,7 +169,7 @@ function error_displayable($error = NULL) {
  *   TRUE if the error is fatal.
  */
 function _drupal_log_error($error, $fatal = FALSE) {
-  // Initialize a maintenance theme if the boostrap was not complete.
+  // Initialize a maintenance theme if the bootstrap was not complete.
   // Do it early because drupal_set_message() triggers a drupal_theme_initialize().
   if ($fatal && (drupal_get_bootstrap_phase() != DRUPAL_BOOTSTRAP_FULL)) {
     unset($GLOBALS['theme']);
@@ -199,7 +199,16 @@ function _drupal_log_error($error, $fatal = FALSE) {
     $number++;
   }
 
-  watchdog('php', '%type: !message in %function (line %line of %file).', $error, $error['severity_level']);
+  // Log the error immediately, unless this is a non-fatal error which has been
+  // triggered via drupal_trigger_error_with_delayed_logging(); in that case
+  // trigger it in a shutdown function. Fatal errors are always triggered
+  // immediately since for a fatal error the page request will end here anyway.
+  if (!$fatal && drupal_static('_drupal_trigger_error_with_delayed_logging')) {
+    drupal_register_shutdown_function('watchdog', 'php', '%type: !message in %function (line %line of %file).', $error, $error['severity_level']);
+  }
+  else {
+    watchdog('php', '%type: !message in %function (line %line of %file).', $error, $error['severity_level']);
+  }
 
   if ($fatal) {
     drupal_add_http_header('Status', '500 Service unavailable (with message)');
@@ -224,7 +233,7 @@ function _drupal_log_error($error, $fatal = FALSE) {
   }
   else {
     // Display the message if the current error reporting level allows this type
-    // of message to be displayed, and unconditionnaly in update.php.
+    // of message to be displayed, and unconditionally in update.php.
     if (error_displayable($error)) {
       $class = 'error';
 

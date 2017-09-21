@@ -223,7 +223,11 @@ function _field_info_collate_types($reset = FALSE) {
       }
       drupal_alter('field_storage_info', $info['storage types']);
 
-      cache_set("field_info_types:$langcode", $info, 'cache_field');
+      // Set the cache if we can acquire a lock.
+      if (lock_acquire("field_info_types:$langcode")) {
+        cache_set("field_info_types:$langcode", $info, 'cache_field');
+        lock_release("field_info_types:$langcode");
+      }
     }
   }
 
@@ -449,6 +453,17 @@ function field_info_bundles($entity_type = NULL) {
  *   - type: The field type.
  *   - bundles: The bundles in which the field appears, as an array with entity
  *     types as keys and the array of bundle names as values.
+ * Example:
+ * @code
+ * array(
+ *   'body' => array(
+ *     'bundles' => array(
+ *       'node' => array('page', 'article'),
+ *     ),
+ *     'type' => 'text_with_summary',
+ *   ),
+ * );
+ * @endcode
  */
 function field_info_field_map() {
   $cache = _field_info_field_cache();

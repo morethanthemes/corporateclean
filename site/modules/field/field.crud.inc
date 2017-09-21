@@ -60,11 +60,11 @@ function field_create_field($field) {
   }
   // Field type is required.
   if (empty($field['type'])) {
-    throw new FieldException('Attempt to create a field with no type.');
+    throw new FieldException(format_string('Attempt to create field @field_name with no type.', array('@field_name' => $field['field_name'])));
   }
   // Field name cannot contain invalid characters.
   if (!preg_match('/^[_a-z]+[_a-z0-9]*$/', $field['field_name'])) {
-    throw new FieldException('Attempt to create a field with invalid characters. Only lowercase alphanumeric characters and underscores are allowed, and only lowercase letters and underscore are allowed as the first character');
+    throw new FieldException(format_string('Attempt to create a field @field_name with invalid characters. Only lowercase alphanumeric characters and underscores are allowed, and only lowercase letters and underscore are allowed as the first character', array('@field_name' => $field['field_name'])));
   }
 
   // Field name cannot be longer than 32 characters. We use drupal_strlen()
@@ -189,7 +189,7 @@ function field_create_field($field) {
   }
 
   // Clear caches
-  field_cache_clear(TRUE);
+  field_cache_clear();
 
   // Invoke external hooks after the cache is cleared for API consistency.
   module_invoke_all('field_create_field', $field);
@@ -244,9 +244,11 @@ function field_update_field($field) {
   // $prior_field may no longer be right.
   module_load_install($field['module']);
   $schema = (array) module_invoke($field['module'], 'field_schema', $field);
-  $schema += array('columns' => array(), 'indexes' => array());
+  $schema += array('columns' => array(), 'indexes' => array(), 'foreign keys' => array());
   // 'columns' are hardcoded in the field type.
   $field['columns'] = $schema['columns'];
+  // 'foreign keys' are hardcoded in the field type.
+  $field['foreign keys'] = $schema['foreign keys'];
   // 'indexes' can be both hardcoded in the field type, and specified in the
   // incoming $field definition.
   $field += array(
@@ -286,7 +288,7 @@ function field_update_field($field) {
   drupal_write_record('field_config', $field, $primary_key);
 
   // Clear caches
-  field_cache_clear(TRUE);
+  field_cache_clear();
 
   // Invoke external hooks after the cache is cleared for API consistency.
   module_invoke_all('field_update_field', $field, $prior_field, $has_data);
@@ -428,7 +430,7 @@ function field_delete_field($field_name) {
     ->execute();
 
   // Clear the cache.
-  field_cache_clear(TRUE);
+  field_cache_clear();
 
   module_invoke_all('field_delete_field', $field);
 }
@@ -522,17 +524,30 @@ function field_create_instance($instance) {
  * Updates an instance of a field.
  *
  * @param $instance
- *   An associative array representing an instance structure. The required
- *   keys and values are:
+ *   An associative array representing an instance structure. The following
+ *   required array elements specify which field instance is being updated:
  *   - entity_type: The type of the entity the field is attached to.
  *   - bundle: The bundle this field belongs to.
  *   - field_name: The name of an existing field.
- *   Read-only_id properties are assigned automatically. Any other
- *   properties specified in $instance overwrite the existing values for
- *   the instance.
+ *   The other array elements represent properties of the instance, and all
+ *   properties must be specified or their default values will be used (except
+ *   internal-use properties, which are assigned automatically). To avoid
+ *   losing the previously stored properties of the instance when making a
+ *   change, first load the instance with field_info_instance(), then override
+ *   the values you want to override, and finally save using this function.
+ *   Example:
+ *   @code
+ *   // Fetch an instance info array.
+ *   $instance_info = field_info_instance($entity_type, $field_name, $bundle_name);
+ *   // Change a single property in the instance definition.
+ *   $instance_info['required'] = TRUE;
+ *   // Write the changed definition back.
+ *   field_update_instance($instance_info);
+ *   @endcode
  *
  * @throws FieldException
  *
+ * @see field_info_instance()
  * @see field_create_instance()
  */
 function field_update_instance($instance) {

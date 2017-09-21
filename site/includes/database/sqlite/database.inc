@@ -250,7 +250,7 @@ class DatabaseConnection_sqlite extends DatabaseConnection {
     $prefixes[$tablename] = '';
     $this->setPrefix($prefixes);
 
-    $this->query(preg_replace('/^SELECT/i', 'CREATE TEMPORARY TABLE ' . $tablename . ' AS SELECT', $query), $args, $options);
+    $this->query('CREATE TEMPORARY TABLE ' . $tablename . ' AS ' . $query, $args, $options);
     return $tablename;
   }
 
@@ -376,6 +376,14 @@ class DatabaseConnection_sqlite extends DatabaseConnection {
         break;
       }
     }
+  }
+
+  public function utf8mb4IsActive() {
+    return TRUE;
+  }
+
+  public function utf8mb4IsSupported() {
+    return TRUE;
   }
 
 }

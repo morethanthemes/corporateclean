@@ -11,9 +11,15 @@ class CommentHelperCase extends DrupalWebTestCase {
   protected $node;
 
   function setUp() {
-    parent::setUp('comment', 'search');
+    $modules = func_get_args();
+    if (isset($modules[0]) && is_array($modules[0])) {
+      $modules = $modules[0];
+    }
+    $modules[] = 'comment';
+    parent::setUp($modules);
+
     // Create users and test node.
-    $this->admin_user = $this->drupalCreateUser(array('administer content types', 'administer comments', 'administer blocks'));
+    $this->admin_user = $this->drupalCreateUser(array('administer content types', 'administer comments', 'administer blocks', 'administer actions', 'administer fields'));
     $this->web_user = $this->drupalCreateUser(array('access comments', 'post comments', 'create article content', 'edit own comments'));
     $this->node = $this->drupalCreateNode(array('type' => 'article', 'promote' => 1, 'uid' => $this->web_user->uid));
   }
@@ -155,7 +161,7 @@ class CommentHelperCase extends DrupalWebTestCase {
         $mode_text = 'required';
         break;
     }
-    $this->setCommentSettings('comment_preview', $mode, 'Comment preview ' . $mode_text . '.');
+    $this->setCommentSettings('comment_preview', $mode, format_string('Comment preview @mode_text.', array('@mode_text' => $mode_text)));
   }
 
   /**
@@ -175,7 +181,7 @@ class CommentHelperCase extends DrupalWebTestCase {
    *   Anonymous level.
    */
   function setCommentAnonymous($level) {
-    $this->setCommentSettings('comment_anonymous', $level, 'Anonymous commenting set to level ' . $level . '.');
+    $this->setCommentSettings('comment_anonymous', $level, format_string('Anonymous commenting set to level @level.', array('@level' => $level)));
   }
 
   /**
@@ -185,7 +191,7 @@ class CommentHelperCase extends DrupalWebTestCase {
    *   Comments per page value.
    */
   function setCommentsPerPage($number) {
-    $this->setCommentSettings('comment_default_per_page', $number, 'Number of comments per page set to ' . $number . '.');
+    $this->setCommentSettings('comment_default_per_page', $number, format_string('Number of comments per page set to @number.', array('@number' => $number)));
   }
 
   /**
@@ -201,7 +207,7 @@ class CommentHelperCase extends DrupalWebTestCase {
   function setCommentSettings($name, $value, $message) {
     variable_set($name . '_article', $value);
     // Display status message.
-    $this->assertTrue(TRUE, $message);
+    $this->pass($message);
   }
 
   /**
@@ -273,7 +279,7 @@ class CommentInterfaceTest extends CommentHelperCase {
     $this->setCommentPreview(DRUPAL_DISABLED);
     $this->setCommentForm(TRUE);
     $this->setCommentSubject(FALSE);
-    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, t('Comment paging changed.'));
+    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, 'Comment paging changed.');
     $this->drupalLogout();
 
     // Post comment #1 without subject or preview.
@@ -583,7 +589,7 @@ class CommentInterfaceTest extends CommentHelperCase {
     $this->setCommentPreview(DRUPAL_DISABLED);
     $this->setCommentForm(TRUE);
     $this->setCommentSubject(FALSE);
-    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, t('Comment paging changed.'));
+    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, 'Comment paging changed.');
     $this->drupalLogout();
 
     // Creates a second user to post comments.
@@ -954,7 +960,7 @@ class CommentPreviewTest extends CommentHelperCase {
     $this->setCommentPreview(DRUPAL_OPTIONAL);
     $this->setCommentForm(TRUE);
     $this->setCommentSubject(TRUE);
-    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, t('Comment paging changed.'));
+    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, 'Comment paging changed.');
     $this->drupalLogout();
 
     // Login as web user and add a signature and a user picture.
@@ -1000,7 +1006,7 @@ class CommentPreviewTest extends CommentHelperCase {
     $this->setCommentPreview(DRUPAL_OPTIONAL);
     $this->setCommentForm(TRUE);
     $this->setCommentSubject(TRUE);
-    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, t('Comment paging changed.'));
+    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, 'Comment paging changed.');
 
     $edit = array();
     $edit['subject'] = $this->randomName(8);
@@ -1238,7 +1244,7 @@ class CommentPagerTest extends CommentHelperCase {
     $comments[] = $this->postComment($node, $this->randomName(), $this->randomName(), TRUE);
     $comments[] = $this->postComment($node, $this->randomName(), $this->randomName(), TRUE);
 
-    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_FLAT, t('Comment paging changed.'));
+    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_FLAT, 'Comment paging changed.');
 
     // Set comments to one per page so that we are able to test paging without
     // needing to insert large numbers of comments.
@@ -1279,7 +1285,7 @@ class CommentPagerTest extends CommentHelperCase {
     // If we switch to threaded mode, the replies on the oldest comment
     // should be bumped to the first page and comment 6 should be bumped
     // to the second page.
-    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, t('Switched to threaded mode.'));
+    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, 'Switched to threaded mode.');
     $this->drupalGet('node/' . $node->nid, array('query' => array('page' => 0)));
     $this->assertTrue($this->commentExists($reply, TRUE), 'In threaded mode, reply appears on page 1.');
     $this->assertFalse($this->commentExists($comments[1]), 'In threaded mode, comment 2 has been bumped off of page 1.');
@@ -1339,7 +1345,7 @@ class CommentPagerTest extends CommentHelperCase {
     // - 2
     //   - 5
 
-    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_FLAT, t('Comment paging changed.'));
+    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_FLAT, 'Comment paging changed.');
 
     $expected_order = array(
       0,
@@ -1353,7 +1359,7 @@ class CommentPagerTest extends CommentHelperCase {
     $this->drupalGet('node/' . $node->nid);
     $this->assertCommentOrder($comments, $expected_order);
 
-    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, t('Switched to threaded mode.'));
+    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, 'Switched to threaded mode.');
 
     $expected_order = array(
       0,
@@ -1435,7 +1441,7 @@ class CommentPagerTest extends CommentHelperCase {
     // - 2
     //   - 5
 
-    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_FLAT, t('Comment paging changed.'));
+    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_FLAT, 'Comment paging changed.');
 
     $expected_pages = array(
       1 => 5, // Page of comment 5
@@ -1453,7 +1459,7 @@ class CommentPagerTest extends CommentHelperCase {
       $this->assertIdentical($expected_page, $returned_page, format_string('Flat mode, @new replies: expected page @expected, returned page @returned.', array('@new' => $new_replies, '@expected' => $expected_page, '@returned' => $returned_page)));
     }
 
-    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, t('Switched to threaded mode.'));
+    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, 'Switched to threaded mode.');
 
     $expected_pages = array(
       1 => 5, // Page of comment 5
@@ -1490,7 +1496,7 @@ class CommentNodeAccessTest extends CommentHelperCase {
   }
 
   function setUp() {
-    DrupalWebTestCase::setUp('comment', 'search', 'node_access_test');
+    parent::setUp('search', 'node_access_test');
     node_access_rebuild();
 
     // Create users and test node.
@@ -1509,7 +1515,7 @@ class CommentNodeAccessTest extends CommentHelperCase {
     $this->setCommentPreview(DRUPAL_DISABLED);
     $this->setCommentForm(TRUE);
     $this->setCommentSubject(TRUE);
-    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, t('Comment paging changed.'));
+    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, 'Comment paging changed.');
     $this->drupalLogout();
 
     // Post comment.
@@ -1974,6 +1980,41 @@ class CommentActionsTestCase extends CommentHelperCase {
   }
 
   /**
+   * Tests the unpublish comment by keyword action.
+   */
+  public function testCommentUnpublishByKeyword() {
+    $this->drupalLogin($this->admin_user);
+    $callback = 'comment_unpublish_by_keyword_action';
+    $hash = drupal_hash_base64($callback);
+    $comment_text = $keywords = $this->randomName();
+    $edit = array(
+      'actions_label' => $callback,
+      'keywords' => $keywords,
+    );
+
+    $this->drupalPost("admin/config/system/actions/configure/$hash", $edit, t('Save'));
+
+    $action = db_query("SELECT aid, type, callback, parameters, label FROM {actions} WHERE callback = :callback", array(':callback' => $callback))->fetchObject();
+
+    $this->assertTrue($action, 'The action could be loaded.');
+
+    $comment = $this->postComment($this->node, $comment_text, $this->randomName());
+
+    // Load the full comment so that status is available.
+    $comment = comment_load($comment->id);
+
+    $this->assertTrue($comment->status == COMMENT_PUBLISHED, 'The comment status was set to published.');
+
+    comment_unpublish_by_keyword_action($comment, array('keywords' => array($keywords)));
+
+    // We need to make sure that the comment has been saved with status
+    // unpublished.
+    $this->assertEqual(comment_load($comment->cid)->status, COMMENT_NOT_PUBLISHED, 'Comment was unpublished.');
+    $this->assertWatchdogMessage('Unpublished comment %subject.', array('%subject' => $comment->subject), 'Found watchdog message.');
+    $this->clearWatchdog();
+  }
+
+  /**
    * Verify that a watchdog message has been entered.
    *
    * @param $watchdog_message
@@ -2126,7 +2167,7 @@ class CommentThreadingTestCase extends CommentHelperCase {
     $this->setCommentPreview(DRUPAL_DISABLED);
     $this->setCommentForm(TRUE);
     $this->setCommentSubject(TRUE);
-    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, t('Comment paging changed.'));
+    $this->setCommentSettings('comment_default_mode', COMMENT_MODE_THREADED, 'Comment paging changed.');
     $this->drupalLogout();
 
     // Create a node.

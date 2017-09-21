@@ -37,9 +37,10 @@ settings[slideshow_wrap]= 0
 settings[slideshow_pause]= 0
 settings[responsive_meta]= 1
 settings[responsive_respond]= 0
-; Information added by drupal.org packaging script on 2013-05-13
-version = "7.x-2.2"
+settings[credits_display]= 1
+; Information added by Drupal.org packaging script on 2014-08-26
+version = "7.x-2.3"
 core = "7.x"
 project = "corporateclean"
-datestamp = "1368461412"
+datestamp = "1409051936"
 

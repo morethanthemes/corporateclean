@@ -83,7 +83,7 @@ interface QueryConditionInterface {
 
   /**
    * Sets a condition that the specified subquery returns values.
-   * 
+   *
    * @param SelectQueryInterface $select
    *   The subquery that must contain results.
    *
@@ -91,10 +91,10 @@ interface QueryConditionInterface {
    *   The called object.
    */
   public function exists(SelectQueryInterface $select);
-  
+
   /**
    * Sets a condition that the specified subquery returns no values.
-   * 
+   *
    * @param SelectQueryInterface $select
    *   The subquery that must not contain results.
    *
@@ -102,7 +102,7 @@ interface QueryConditionInterface {
    *   The called object.
    */
   public function notExists(SelectQueryInterface $select);
-  
+
   /**
    * Gets a complete list of all conditions in this conditional clause.
    *
@@ -283,14 +283,14 @@ abstract class Query implements QueryPlaceholderInterface {
 
   /**
    * The target of the connection object.
-   * 
+   *
    * @var string
    */
   protected $connectionTarget;
 
   /**
    * The key of the connection object.
-   * 
+   *
    * @var string
    */
   protected $connectionKey;
@@ -710,10 +710,11 @@ class InsertQuery extends Query {
       // first call to fields() does have an effect.
       $this->fields(array_merge(array_keys($this->fromQuery->getFields()), array_keys($this->fromQuery->getExpressions())));
     }
-
-    // Don't execute query without fields.
-    if (count($this->insertFields) + count($this->defaultFields) == 0) {
-      throw new NoFieldsException('There are no fields available to insert with.');
+    else {
+      // Don't execute query without fields.
+      if (count($this->insertFields) + count($this->defaultFields) == 0) {
+        throw new NoFieldsException('There are no fields available to insert with.');
+      }
     }
 
     // If no values have been added, silently ignore this query. This can happen
@@ -804,7 +805,7 @@ class DeleteQuery extends Query implements QueryConditionInterface {
     $this->condition->notExists($select);
     return $this;
   }
-  
+
   /**
    * Implements QueryConditionInterface::conditions().
    */
@@ -844,8 +845,8 @@ class DeleteQuery extends Query implements QueryConditionInterface {
   /**
    * Executes the DELETE query.
    *
-   * @return
-   *   The return value is dependent on the database connection.
+   * @return int
+   *   The number of rows affected by the delete query.
    */
   public function execute() {
     $values = array();
@@ -942,7 +943,17 @@ class TruncateQuery extends Query {
     // Create a sanitized comment string to prepend to the query.
     $comments = $this->connection->makeComment($this->comments);
 
-    return $comments . 'TRUNCATE {' . $this->connection->escapeTable($this->table) . '} ';
+    // In most cases, TRUNCATE is not a transaction safe statement as it is a
+    // DDL statement which results in an implicit COMMIT. When we are in a
+    // transaction, fallback to the slower, but transactional, DELETE.
+    // PostgreSQL also locks the entire table for a TRUNCATE strongly reducing
+    // the concurrency with other transactions.
+    if ($this->connection->inTransaction()) {
+      return $comments . 'DELETE FROM {' . $this->connection->escapeTable($this->table) . '}';
+    }
+    else {
+      return $comments . 'TRUNCATE {' . $this->connection->escapeTable($this->table) . '} ';
+    }
   }
 }
 
@@ -1053,7 +1064,7 @@ class UpdateQuery extends Query implements QueryConditionInterface {
     $this->condition->notExists($select);
     return $this;
   }
-  
+
   /**
    * Implements QueryConditionInterface::conditions().
    */
@@ -1231,7 +1242,7 @@ class UpdateQuery extends Query implements QueryConditionInterface {
  * MergeQuery::updateFields() and MergeQuery::insertFields() needs to be called
  * instead. MergeQuery::fields() can also be called which calls both of these
  * methods as the common case is to use the same column-value pairs for both
- * INSERT and UPDATE. However, this is not mandatory. Another convinient
+ * INSERT and UPDATE. However, this is not mandatory. Another convenient
  * wrapper is MergeQuery::key() which adds the same column-value pairs to the
  * condition and the INSERT query part.
  *
@@ -1545,7 +1556,7 @@ class MergeQuery extends Query implements QueryConditionInterface {
     $this->condition->notExists($select);
     return $this;
   }
-  
+
   /**
    * Implements QueryConditionInterface::conditions().
    */
@@ -1595,55 +1606,43 @@ class MergeQuery extends Query implements QueryConditionInterface {
   }
 
   public function execute() {
-    // Wrap multiple queries in a transaction, if the database supports it.
-    $transaction = $this->connection->startTransaction();
-    try {
-      if (!count($this->condition)) {
-        throw new InvalidMergeQueryException(t('Invalid merge query: no conditions'));
+    if (!count($this->condition)) {
+      throw new InvalidMergeQueryException(t('Invalid merge query: no conditions'));
+    }
+    $select = $this->connection->select($this->conditionTable)
+      ->condition($this->condition);
+    $select->addExpression('1');
+    if (!$select->execute()->fetchField()) {
+      try {
+        $insert = $this->connection->insert($this->table)->fields($this->insertFields);
+        if ($this->defaultFields) {
+          $insert->useDefaults($this->defaultFields);
+        }
+        $insert->execute();
+        return self::STATUS_INSERT;
       }
-      $select = $this->connection->select($this->conditionTable)
-        ->condition($this->condition)
-        ->forUpdate();
-      $select->addExpression('1');
-      if (!$select->execute()->fetchField()) {
-        try {
-          $insert = $this->connection->insert($this->table)->fields($this->insertFields);
-          if ($this->defaultFields) {
-            $insert->useDefaults($this->defaultFields);
-          }
-          $insert->execute();
-          return MergeQuery::STATUS_INSERT;
+      catch (Exception $e) {
+        // The insert query failed, maybe it's because a racing insert query
+        // beat us in inserting the same row. Retry the select query, if it
+        // returns a row, ignore the error and continue with the update
+        // query below.
+        if (!$select->execute()->fetchField()) {
+          throw $e;
         }
-        catch (Exception $e) {
-          // The insert query failed, maybe it's because a racing insert query
-          // beat us in inserting the same row. Retry the select query, if it
-          // returns a row, ignore the error and continue with the update
-          // query below.
-          if (!$select->execute()->fetchField()) {
-            throw $e;
-          }
-        }
-      }
-      if ($this->needsUpdate) {
-        $update = $this->connection->update($this->table)
-          ->fields($this->updateFields)
-          ->condition($this->condition);
-        if ($this->expressionFields) {
-          foreach ($this->expressionFields as $field => $data) {
-            $update->expression($field, $data['expression'], $data['arguments']);
-          }
-        }
-        $update->execute();
-        return MergeQuery::STATUS_UPDATE;
       }
     }
-    catch (Exception $e) {
-      // Something really wrong happened here, bubble up the exception to the
-      // caller.
-      $transaction->rollback();
-      throw $e;
-    }
-    // Transaction commits here where $transaction looses scope.
+    if ($this->needsUpdate) {
+      $update = $this->connection->update($this->table)
+        ->fields($this->updateFields)
+        ->condition($this->condition);
+      if ($this->expressionFields) {
+        foreach ($this->expressionFields as $field => $data) {
+          $update->expression($field, $data['expression'], $data['arguments']);
+        }
+      }
+      $update->execute();
+      return self::STATUS_UPDATE;
+     }
   }
 }
 
@@ -1695,7 +1694,7 @@ class DatabaseCondition implements QueryConditionInterface, Countable {
    * Implements Countable::count().
    *
    * Returns the size of this conditional. The size of the conditional is the
-   * size of its conditional array minus one, because one element is the the
+   * size of its conditional array minus one, because one element is the
    * conjunction.
    */
   public function count() {
@@ -1762,14 +1761,14 @@ class DatabaseCondition implements QueryConditionInterface, Countable {
   public function exists(SelectQueryInterface $select) {
     return $this->condition('', $select, 'EXISTS');
   }
-  
+
   /**
    * Implements QueryConditionInterface::notExists().
    */
   public function notExists(SelectQueryInterface $select) {
     return $this->condition('', $select, 'NOT EXISTS');
   }
-  
+
   /**
    * Implements QueryConditionInterface::conditions().
    */

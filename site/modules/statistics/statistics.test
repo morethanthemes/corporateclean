@@ -35,7 +35,7 @@ class StatisticsTestCase extends DrupalWebTestCase {
         'title' => 'test',
         'path' => 'node/1',
         'url' => 'http://example.com',
-        'hostname' => '192.168.1.1',
+        'hostname' => '1.2.3.3',
         'uid' => 0,
         'sid' => 10,
         'timer' => 10,
@@ -118,6 +118,22 @@ class StatisticsLoggingTestCase extends DrupalWebTestCase {
     $node_counter = statistics_get($this->node->nid);
     $this->assertIdentical($node_counter['totalcount'], '3');
 
+    // Test that Ajax logging doesn't occur when disabled.
+    $post = http_build_query(array('nid' => $this->node->nid));
+    $headers = array('Content-Type' => 'application/x-www-form-urlencoded');
+    global $base_url;
+    $stats_path = $base_url . '/' . drupal_get_path('module', 'statistics'). '/statistics.php';
+    drupal_http_request($stats_path, array('method' => 'POST', 'data' => $post, 'headers' => $headers, 'timeout' => 10000));
+    $node_counter = statistics_get($this->node->nid);
+    $this->assertIdentical($node_counter['totalcount'], '3', 'Page request was not counted via Ajax.');
+
+    // Test that Ajax logging occurs when enabled.
+    variable_set('statistics_count_content_views_ajax', 1);
+    drupal_http_request($stats_path, array('method' => 'POST', 'data' => $post, 'headers' => $headers, 'timeout' => 10000));
+    $node_counter = statistics_get($this->node->nid);
+    $this->assertIdentical($node_counter['totalcount'], '4', 'Page request was counted via Ajax.');
+    variable_set('statistics_count_content_views_ajax', 0);
+
     // Visit edit page to generate a title greater than 255.
     $path = 'node/' . $this->node->nid . '/edit';
     $expected = array(
@@ -142,7 +158,6 @@ class StatisticsLoggingTestCase extends DrupalWebTestCase {
     $log = db_query('SELECT * FROM {accesslog}')->fetchAll(PDO::FETCH_ASSOC);
     $this->assertTrue(is_array($log) && count($log) == 8, 'Page request was logged for a path over 255 characters.');
     $this->assertEqual($log[7]['path'], truncate_utf8($long_path, 255));
-
   }
 }
 
@@ -253,7 +268,7 @@ class StatisticsBlockVisitorsTestCase extends StatisticsTestCase {
    */
   function testIPAddressBlocking() {
     // IP address for testing.
-    $test_ip_address = '192.168.1.1';
+    $test_ip_address = '1.2.3.3';
 
     // Verify the IP address from accesslog appears on the top visitors page
     // and that a 'block IP address' link is displayed.
@@ -399,7 +414,7 @@ class StatisticsAdminTestCase extends DrupalWebTestCase {
     $timestamp = time();
     $this->drupalPost(NULL, NULL, t('Cancel account'));
     // Confirm account cancellation request.
-    $this->drupalGet("user/$account->uid/cancel/confirm/$timestamp/" . user_pass_rehash($account->pass, $timestamp, $account->login));
+    $this->drupalGet("user/$account->uid/cancel/confirm/$timestamp/" . user_pass_rehash($account->pass, $timestamp, $account->login, $account->uid));
     $this->assertFalse(user_load($account->uid, TRUE), 'User is not found in the database.');
 
     $this->drupalGet('admin/reports/visitors');
