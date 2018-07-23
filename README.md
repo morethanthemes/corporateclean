@@ -3,7 +3,7 @@ Corporate Clean
 
 This repository contains the Drupal installation that runs at [drupalizing.com](http://drupalizing.com) and demonstrates the [“Corporate Clean”](http://drupal.org/project/corporateclean) Drupal theme. We use this repository in order to maintain the above mentioned site and develop the corresponding theme. 
 
-You are welcome however to grab this code and have the demonstration site running on your end. By doing this you have the chance to see the ["Corporate Clean" theme in action](http://demo.drupalizing.com/?theme=corporateclean) exactly the way it looks like on our demo.
+You are welcome however to grab this code and have the demonstration site running on your end. By doing this you have the chance to see the ["Corporate Clean" theme in action](http://demo.drupalizing.com/corporateclean) exactly the way it looks like on our demo.
 
 Installation instructions
 --------------
