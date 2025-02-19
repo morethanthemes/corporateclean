@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - search
+    - system
+  theme:
+    - corporateclean
+id: corporateclean_search
+theme: corporateclean
+region: sidebar_second
+weight: -43
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: Search
+  provider: search
+  label_display: visible
+  page_id: ''
+visibility: {}

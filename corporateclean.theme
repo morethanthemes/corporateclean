@@ -1,0 +1,17 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @file
+ * Functions to support theming in the Corporate Clean theme.
+ */
+
+/**
+ * Implements hook_preprocess_HOOK() for html.html.twig.
+ */
+function corporateclean_preprocess_html(array &$variables): void {
+  $color_scheme_library = 'corporateclean/color-'.theme_get_setting('color_scheme');
+  $variables['#attached']['library'][] = $color_scheme_library;
+  $variables['attributes']['class'][] = 'mt-color-scheme-' . theme_get_setting('color_scheme');
+}
