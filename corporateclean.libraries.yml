@@ -5,7 +5,7 @@ global-styling:
     base:
       css/base/elements.css: {}
     component:
-      css/component/buttons.css: {}
+      css/components/buttons.css: {}
     layout:
       css/layout/layout.css: {}
     theme:
