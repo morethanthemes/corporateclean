@@ -9,7 +9,7 @@ dependencies:
     - corporateclean
 id: corporateclean_tools
 theme: corporateclean
-region: sidebar_second
+region: hidden_blocks_collection
 weight: -23
 provider: null
 plugin: 'system_menu_block:tools'
