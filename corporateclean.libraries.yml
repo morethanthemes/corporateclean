@@ -25,6 +25,12 @@ local-stylesheets:
       css/theme/image-shapes.css: { weight: 100 }
       css/theme/local-theme.css: { weight: 150 }
 
+node-view-mode-card:
+  version: VERSION
+  css:
+    component:
+      css/components/node-view-mode-card.css: {}
+
 #####################
 #   Color Schemes   #
 #####################

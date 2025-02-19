@@ -15,3 +15,7 @@ function corporateclean_preprocess_html(array &$variables): void {
   $variables['#attached']['library'][] = $color_scheme_library;
   $variables['attributes']['class'][] = 'mt-color-scheme-' . theme_get_setting('color_scheme');
 }
+
+function corporateclean_preprocess_node__card(array &$variables): void {
+  $variables['#attached']['library'][] = 'corporateclean/node-view-mode-card';
+}
