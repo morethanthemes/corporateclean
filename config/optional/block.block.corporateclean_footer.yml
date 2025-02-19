@@ -6,9 +6,9 @@ dependencies:
   module:
     - system
   theme:
-    - baseplus
-id: baseplus_footer
-theme: baseplus
+    - corporateclean
+id: corporateclean_footer
+theme: corporateclean
 region: footer
 weight: -8
 provider: null
