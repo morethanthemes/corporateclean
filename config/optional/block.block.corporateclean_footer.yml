@@ -9,7 +9,7 @@ dependencies:
     - corporateclean
 id: corporateclean_footer
 theme: corporateclean
-region: footer
+region: sub_footer_first
 weight: -8
 provider: null
 plugin: 'system_menu_block:footer'
