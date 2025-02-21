@@ -9,7 +9,7 @@ dependencies:
     - corporateclean
 id: corporateclean_account_menu
 theme: corporateclean
-region: footer
+region: header_top_highlighted_second
 weight: -41
 provider: null
 plugin: 'system_menu_block:account'
