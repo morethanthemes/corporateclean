@@ -31,6 +31,12 @@ node-view-mode-card:
     component:
       css/components/node-view-mode-card.css: {}
 
+node-view-mode-card-2:
+  version: VERSION
+  css:
+    component:
+      css/components/node-view-mode-card-2.css: {}
+
 #####################
 #   Color Schemes   #
 #####################

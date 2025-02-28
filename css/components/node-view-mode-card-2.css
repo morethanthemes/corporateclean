@@ -1,0 +1,7 @@
+/**
+ * @file
+ * Visual styles for Corporate Clean's node in teaser tile view.
+ */
+.node--view-mode-card-2.region--default-background {
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
