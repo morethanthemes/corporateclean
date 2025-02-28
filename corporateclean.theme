@@ -19,7 +19,3 @@ function corporateclean_preprocess_html(array &$variables): void {
 function corporateclean_preprocess_node__card(array &$variables): void {
   $variables['#attached']['library'][] = 'corporateclean/node-view-mode-card';
 }
-
-function corporateclean_preprocess_node__person__card(array &$variables): void {
-  $variables['#attached']['library'][] = 'corporateclean/node-view-mode-card-2';
-}
