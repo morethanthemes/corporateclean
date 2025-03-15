@@ -31,8 +31,8 @@
   --mt-color-accent-contrast-value: var(--mt-color-base-value);
 
   /*secondary color*/
-  --mt-color-secondary: hsl(193, 13%, 20%);
-  --mt-color-secondary-dark: hsl(193, 13%, 15%);
+  --mt-color-secondary: hsl(214, 100%, 47%);
+  --mt-color-secondary-dark: hsl(214, 100%, 40%);
   --mt-color-secondary-light: hsl(193, 13%, 50%);
   --mt-color-secondary-contrast: var(--mt-color-base-contrast);
   --mt-color-secondary-value: 193, 13%, 20%;
