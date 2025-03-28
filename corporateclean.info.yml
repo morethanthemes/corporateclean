@@ -1,6 +1,6 @@
 name: Corporate Clean
 type: theme
-base theme: baseplus
+base theme: basecore
 description: A flexible theme with a responsive, mobile-first layout.
 core_version_requirement: ^10 || ^11
 libraries:

@@ -47,7 +47,7 @@ color-blue:
       css/theme/color-blue.css: { weight: 100 }
   dependencies:
     - corporateclean/base-color
-    - baseplus/base-color
+    - basecore/base-color
 
 color-gray:
   version: VERSION
@@ -56,7 +56,7 @@ color-gray:
       css/theme/color-gray.css: { weight: 100 }
   dependencies:
     - corporateclean/base-color
-    - baseplus/base-color
+    - basecore/base-color
 
 color-green:
   version: VERSION
@@ -65,7 +65,7 @@ color-green:
       css/theme/color-green.css: { weight: 100 }
   dependencies:
     - corporateclean/base-color
-    - baseplus/base-color
+    - basecore/base-color
 
 color-orange:
   version: VERSION
@@ -74,7 +74,7 @@ color-orange:
       css/theme/color-orange.css: { weight: 100 }
   dependencies:
     - corporateclean/base-color
-    - baseplus/base-color
+    - basecore/base-color
 
 color-pink:
   version: VERSION
@@ -83,7 +83,7 @@ color-pink:
       css/theme/color-pink.css: { weight: 100 }
   dependencies:
     - corporateclean/base-color
-    - baseplus/base-color
+    - basecore/base-color
 
 color-purple:
   version: VERSION
@@ -92,7 +92,7 @@ color-purple:
       css/theme/color-purple.css: { weight: 100 }
   dependencies:
     - corporateclean/base-color
-    - baseplus/base-color
+    - basecore/base-color
 
 color-red:
   version: VERSION
@@ -101,7 +101,7 @@ color-red:
       css/theme/color-red.css: { weight: 100 }
   dependencies:
     - corporateclean/base-color
-    - baseplus/base-color
+    - basecore/base-color
 
 color-turquoise:
   version: VERSION
@@ -110,7 +110,7 @@ color-turquoise:
       css/theme/color-turquoise.css: { weight: 100 }
   dependencies:
     - corporateclean/base-color
-    - baseplus/base-color
+    - basecore/base-color
 
 color-yellow:
   version: VERSION
@@ -119,7 +119,7 @@ color-yellow:
       css/theme/color-yellow.css: { weight: 100 }
   dependencies:
     - corporateclean/base-color
-    - baseplus/base-color
+    - basecore/base-color
 
 color-local:
   version: VERSION
@@ -128,4 +128,4 @@ color-local:
       css/theme/color-local.css: { weight: 100 }
   dependencies:
     - corporateclean/base-color
-    - baseplus/base-color
+    - basecore/base-color

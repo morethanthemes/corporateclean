@@ -26,6 +26,6 @@ To customize the CorporateClean theme, you can:
 
 ## Dependecies
 
-CorporateClean is a sub-theme of the Base+ theme.
+CorporateClean is a sub-theme of the BaseCore theme.
 
 For support and questions, please open an issue in the repository.
