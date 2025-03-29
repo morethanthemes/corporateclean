@@ -106,7 +106,7 @@ sticky_footer_background_color: region--tint-background
 sticky_footer_blocks_paddings: 0
 sticky_footer_region_paddings: 0
 sticky_footer_trigger_text: ''
-google_maps_key: AIzaSyDyL-4KyWw_3hp-0jmZLGcJ3zMWkkJ44VI
+google_maps_key: your_google_maps_key
 header_background_color: region--bright-background
 header_background_image_state: 0
 header_blocks_paddings: 0
