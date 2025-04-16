@@ -1,0 +1,32 @@
+a.mt-button,
+.mt-button > a,
+button.mt-button,
+input[type='submit'],
+input[type='reset'],
+input[type='button'],
+.btn {
+  border: none;
+  padding: 0.75rem 2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+}
+a.mt-button:hover,
+.mt-button > a:hover,
+button.mt-button:hover {
+  padding: 0.75rem 2rem;
+}
+a.mt-button:hover,
+.mt-button > a:hover,
+button.mt-button:hover,
+input[type='submit']:hover,
+input[type='reset']:hover,
+input[type='button']:hover {
+  color: var(--mt-color-primary-contrast);
+}
+a.mt-button:after,
+.mt-button > a:after,
+button.mt-button:after {
+  opacity: 0;
+  content: '';
+}
