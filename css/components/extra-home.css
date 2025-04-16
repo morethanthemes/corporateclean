@@ -1,0 +1,62 @@
+.section {
+  padding: 8rem 0;
+}
+.hero {
+  background-color: var(--mt-color-accent);
+  padding: 8rem 0;
+}
+.hero h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.2;
+}
+.hero p {
+  font-size: 1.25rem;
+  font-weight: 300;
+  max-width: 600px;
+}
+.service-card {
+  padding: 2rem;
+  border: none;
+  transition: transform 0.3s ease;
+}
+.service-card:hover {
+  transform: translateY(-5px);
+}
+.service-card h3 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+.service-card p {
+  margin-top: 0;
+}
+.newsletter-form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+.form-control {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--mt-form-border);
+  border-radius: 4px;
+}
+.form-control .mt-button,
+.form-control .btn {
+  padding: 0.9rem 2rem;
+}
+.testimonial-card .testimonial-text {
+  font-size: 1.1rem;
+  font-weight: 300;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+.testimonial-card .testimonial-author {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+.testimonial-card .testimonial-position {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0;
+}
