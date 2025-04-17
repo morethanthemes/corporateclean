@@ -60,9 +60,21 @@
 .testimonial-card .testimonial-author {
   font-weight: 500;
   margin-bottom: 0.25rem;
+  font-size: 1.5rem;
 }
 .testimonial-card .testimonial-position {
   font-size: 0.9rem;
   color: #666;
   margin-top: 0;
+}
+@media (max-width: 768px) {
+  .hero {
+    padding: 4rem 0;
+  }
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  .section {
+    padding: 4rem 0;
+  }
 }
