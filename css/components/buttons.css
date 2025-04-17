@@ -6,7 +6,7 @@ input[type='reset'],
 input[type='button'],
 .btn {
   border: none;
-  padding: 0.75rem 2rem;
+  padding: 1rem 2rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 0.9rem;
@@ -14,7 +14,7 @@ input[type='button'],
 a.mt-button:hover,
 .mt-button > a:hover,
 button.mt-button:hover {
-  padding: 0.75rem 2rem;
+  padding: 1rem 2rem;
 }
 a.mt-button:hover,
 .mt-button > a:hover,
