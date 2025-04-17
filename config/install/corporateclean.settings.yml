@@ -70,7 +70,7 @@ fixed_header: 1
 fixed_header_behavior: fixed-header-enabled--scroll-up
 font_resize: 1
 footer_animation_effect: no-animation
-footer_background_color: region--tint-background
+footer_background_color: region--colored-background
 footer_blocks_paddings: 0
 footer_bottom_background_color: region--tint-background
 footer_bottom_blocks_paddings: 0
@@ -233,7 +233,7 @@ sub_featured_id: sub-featured
 sub_featured_layout_container: container
 sub_featured_region_paddings: 0
 sub_featured_separator: region--no-separator
-subfooter_background_color: region--colored-background
+subfooter_background_color: region--shade-background
 subfooter_blocks_paddings: 0
 subfooter_bottom_blocks_paddings: false
 subfooter_bottom_region_paddings: false

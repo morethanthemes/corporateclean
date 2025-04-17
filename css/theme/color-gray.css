@@ -43,7 +43,7 @@
   --mt-color-tint-contrast-value: var(--mt-color-base-value);
 
   /*shade background*/
-  --mt-color-shade: hsl(193, 13%, 7%);
+  --mt-color-shade: hsl(198, 16%, 12%);
   --mt-color-shade-contrast: var(--mt-color-base-contrast);
   --mt-color-shade-contrast-value: var(--mt-color-base-contrast-value);
 
