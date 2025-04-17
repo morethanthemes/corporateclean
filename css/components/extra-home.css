@@ -1,9 +1,10 @@
 .section {
-  padding: 8rem 0;
+  padding: 7rem 0;
 }
 .hero {
-  background-color: var(--mt-color-accent);
+  background-color: var(--mt-color-tint);
   padding: 8rem 0;
+  min-height: 80vh;
 }
 .hero h1 {
   font-size: 3.5rem;
@@ -17,7 +18,7 @@
   max-width: 600px;
 }
 .service-card {
-  padding: 2rem;
+  padding: 0 2rem;
   border: none;
   transition: transform 0.3s ease;
 }
@@ -28,6 +29,7 @@
   font-size: 1.75rem;
   font-weight: 800;
   margin-bottom: 0.5rem;
+  margin-top: 0;
 }
 .service-card p {
   margin-top: 0;
@@ -44,6 +46,10 @@
 .form-control .mt-button,
 .form-control .btn {
   padding: 0.9rem 2rem;
+}
+.testimonials-block {
+  background-color: var(--mt-color-accent);
+  padding: 9rem 0;
 }
 .testimonial-card .testimonial-text {
   font-size: 1.1rem;
