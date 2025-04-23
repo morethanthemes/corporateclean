@@ -5,7 +5,6 @@ input[type='submit'],
 input[type='reset'],
 input[type='button'],
 .btn {
-  border: none;
   padding: 1rem 2rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -29,4 +28,11 @@ a.mt-button:after,
 button.mt-button:after {
   opacity: 0;
   content: '';
+}
+a.mt-button.mt-button--outline,
+.mt-button.mt-button--outline > a,
+input[type='submit'].mt-button--outline,
+input[type='reset'].mt-button--outline,
+input[type='button'].mt-button--outline {
+  padding: 1rem 2rem;
 }
