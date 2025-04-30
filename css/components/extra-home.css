@@ -1,10 +1,10 @@
-.hero h1 {
+.mt-layout--label--hero h1 {
   font-size: 3.5rem;
   font-weight: 700;
   letter-spacing: -1px;
   line-height: 1.2;
 }
-.hero p {
+.mt-layout--label--hero p {
   font-size: 1.25rem;
   font-weight: 300;
   max-width: 600px;
@@ -19,7 +19,7 @@
   border-radius: 4px;
 }
 @media (max-width: 768px) {
-  .hero h1 {
+  .mt-layout--label--hero h1 {
     font-size: 2.5rem;
   }
 }
