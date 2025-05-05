@@ -9,15 +9,15 @@ dependencies:
     - corporateclean
 id: corporateclean_footer
 theme: corporateclean
-region: footer
+region: footer_second
 weight: -8
 provider: null
 plugin: 'system_menu_block:footer'
 settings:
   id: 'system_menu_block:footer'
-  label: 'Footer menu'
+  label: Legal
+  label_display: visible
   provider: system
-  label_display: '0'
   level: 1
   depth: 0
   expand_all_items: false
