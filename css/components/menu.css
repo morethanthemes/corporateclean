@@ -14,3 +14,9 @@
 .header-container ul.menu a.is-active {
   color: var(--mt-color-primary);
 }
+.footer__section ul.menu li a,
+.footer__section ul.menu li > span {
+  padding: 0;
+  font-size: 1rem;
+  margin: 0.8rem 0;
+}

@@ -1,8 +1,12 @@
 .footer__section {
   padding: 5rem 0;
-  font-size: 16px;
+}
+.footer__section p {
+  font-size: 1rem;
 }
 .subfooter__container {
   padding: 1.5rem 0;
+}
+.subfooter__section p {
   font-size: 0.9rem;
 }

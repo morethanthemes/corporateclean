@@ -1,0 +1,8 @@
+.footer__section h4.title,
+.footer__section h2.title,
+.footer__section nav > h2,
+.footer__section .block-search > h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
