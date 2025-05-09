@@ -1,3 +1,11 @@
+p a,
+p a:not([class]) {
+  text-decoration: underline;
+  background-color: transparent;
+}
+p a:hover {
+  text-decoration: none;
+}
 .footer__section h4.title,
 .footer__section h2.title,
 .footer__section nav > h2,
