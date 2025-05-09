@@ -63,6 +63,8 @@ a.link--bordered,
 
 /* base: layout */
 .region--default-background {
+  --mt-region-color: var(--mt-color-default);
+  --mt-region-contrast-color: var(--mt-color-default-contrast);
   --mt-link-color: var(--mt-color-secondary);
   --mt-dark-link-color: var(--mt-color-primary-dark);
   --mt-link-border-color: var(--mt-color-default-contrast);
@@ -72,6 +74,8 @@ a.link--bordered,
   --mt-border-color: rgba(var(--mt-color-default-contrast-value), 0.2);
 }
 .region--dark-colored-background {
+  --mt-region-color: var(--mt-color-dark-colored);
+  --mt-region-contrast-color: var(--mt-color-dark-colored-contrast);
   --mt-link-color: var(--mt-color-secondary-light);
   --mt-dark-link-color: var(--mt-color-secondary-light);
   --mt-link-border-color: var(--mt-color-dark-colored-contrast);
@@ -81,6 +85,8 @@ a.link--bordered,
   --mt-border-color: rgba(var(--mt-color-dark-colored-contrast-value), 0.1);
 }
 .region--colored-background {
+  --mt-region-color: var(--mt-color-colored);
+  --mt-region-contrast-color: var(--mt-color-colored-contrast);
   --mt-link-color: var(--mt-color-secondary-light);
   --mt-dark-link-color: var(--mt-color-secondary-light);
   --mt-link-border-color: var(--mt-color-colored-contrast);
@@ -90,6 +96,8 @@ a.link--bordered,
   --mt-border-color: rgba(var(--mt-color-colored-contrast-value), 0.1);
 }
 .region--accent-background {
+  --mt-region-color: var(--mt-color-accent);
+  --mt-region-contrast-color: var(--mt-color-accent-contrast);
   --mt-link-color: var(--mt-color-secondary);
   --mt-dark-link-color: var(--mt-color-primary-dark);
   --mt-link-border-color: var(--mt-color-accent-contrast);
@@ -99,6 +107,8 @@ a.link--bordered,
   --mt-border-color: rgba(var(--mt-color-accent-contrast-value), 0.2);
 }
 .region--tint-background {
+  --mt-region-color: var(--mt-color-tint);
+  --mt-region-contrast-color: var(--mt-color-tint-contrast);
   --mt-link-color: var(--mt-color-secondary);
   --mt-dark-link-color: var(--mt-color-primary-dark);
   --mt-link-border-color: var(--mt-color-tint-contrast);
@@ -108,6 +118,8 @@ a.link--bordered,
   --mt-border-color: rgba(var(--mt-color-tint-contrast-value), 0.2);
 }
 .region--shade-background {
+  --mt-region-color: var(--mt-color-shade);
+  --mt-region-contrast-color: var(--mt-color-shade-contrast);
   --mt-link-color: var(--mt-color-secondary-light);
   --mt-dark-link-color: var(--mt-color-secondary-light);
   --mt-link-border-color: var(--mt-color-shade-contrast);
@@ -117,6 +129,8 @@ a.link--bordered,
   --mt-border-color: rgba(var(--mt-color-shade-contrast-value), 0.1);
 }
 .region--bright-background {
+  --mt-region-color: var(--mt-color-bright);
+  --mt-region-contrast-color: var(--mt-color-bright-contrast);
   --mt-link-color: var(--mt-color-secondary);
   --mt-dark-link-color: var(--mt-color-primary-dark);
   --mt-link-border-color: var(--mt-color-bright-contrast);
@@ -126,6 +140,8 @@ a.link--bordered,
   --mt-border-color: rgba(var(--mt-color-bright-contrast-value), 0.2);
 }
 .region--pattern {
+  --mt-region-color: var(--mt-color-pattern);
+  --mt-region-contrast-color: var(--mt-color-pattern-contrast);
   --mt-link-color: var(--mt-color-secondary);
   --mt-dark-link-color: var(--mt-color-primary-dark);
   --mt-link-border-color: var(--mt-color-pattern-contrast);
@@ -135,6 +151,8 @@ a.link--bordered,
   --mt-border-color: rgba(var(--mt-color-pattern-contrast-value), 0.2);
 }
 .region--dark-background {
+  --mt-region-color: var(--mt-color-dark);
+  --mt-region-contrast-color: var(--mt-color-dark-contrast);
   --mt-link-color: var(--mt-color-secondary-light);
   --mt-dark-link-color: var(--mt-color-secondary-light);
   --mt-link-border-color: var(--mt-color-dark-contrast);
@@ -152,7 +170,11 @@ a:hover,
 a:focus {
   color: var(--mt-link-color-hover);
 }
-
+p a:hover,
+p a:focus {
+  background-color: var(--mt-region-contrast-color);
+  color: var(--mt-region-color);
+}
 .region--default-background,
 #drupal-off-canvas-wrapper label.region--default-background {
   background-color: var(--mt-color-default);
