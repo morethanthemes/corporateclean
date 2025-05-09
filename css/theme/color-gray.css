@@ -12,13 +12,13 @@
   --mt-color-base-contrast-value: 246, 249, 252;
 
   /*primary color*/
-  --mt-color-primary: hsl(193, 13%, 20%);
-  --mt-color-primary-dark: hsl(193, 13%, 15%);
-  --mt-color-primary-light: hsl(193, 13%, 25%);
+  --mt-color-primary: hsl(198, 13%, 20%);
+  --mt-color-primary-dark: hsl(198, 13%, 0%);
+  --mt-color-primary-light: hsl(198, 13%, 25%);
   --mt-color-primary-contrast: var(--mt-color-base-contrast);
-  --mt-color-primary-value: 193, 13%, 20%;
-  --mt-color-primary-dark-value: 193, 13%, 15%;
-  --mt-color-primary-light-value: 193, 13%, 25%;
+  --mt-color-primary-value: 198, 13%, 20%;
+  --mt-color-primary-dark-value: 198, 13%, 0%;
+  --mt-color-primary-light-value: 198, 13%, 25%;
   --mt-color-primary-contrast-value: var(--mt-color-base-contrast-value);
   --mt-color-primary-filter: invert(47%) sepia(13%) saturate(274%)
     hue-rotate(215deg) brightness(87%) contrast(86%);
@@ -31,11 +31,11 @@
   --mt-color-accent-contrast-value: var(--mt-color-base-value);
 
   /*secondary color*/
-  --mt-color-secondary: hsl(214, 100%, 47%);
-  --mt-color-secondary-dark: hsl(214, 100%, 40%);
-  --mt-color-secondary-light: hsl(193, 13%, 50%);
+  --mt-color-secondary: hsl(198, 13%, 20%);
+  --mt-color-secondary-dark: hsl(198, 13%, 0%);
+  --mt-color-secondary-light: hsl(198, 13%, 50%);
   --mt-color-secondary-contrast: var(--mt-color-base-contrast);
-  --mt-color-secondary-value: 193, 13%, 20%;
+  --mt-color-secondary-value: 198, 13%, 22%;
 
   /*tint background*/
   --mt-color-tint: #e8e9eb;
@@ -48,9 +48,9 @@
   --mt-color-shade-contrast-value: var(--mt-color-base-contrast-value);
 
   /*dark colored background*/
-  --mt-color-dark-colored: hsl(193, 13%, 10%);
+  --mt-color-dark-colored: hsl(198, 13%, 0%);
   --mt-color-dark-colored-contrast: var(--mt-color-base-contrast);
-  --mt-color-dark-colored-value: 193, 13%, 10%;
+  --mt-color-dark-colored-value: 198, 13%, 0%;
   --mt-color-dark-colored-contrast-value: var(--mt-color-base-contrast-value);
 
   /*colored background*/

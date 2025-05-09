@@ -349,7 +349,7 @@ input[type='button'].mt-button--outline:active {
 a.mt-button:before,
 .mt-button > a:before,
 button.mt-button:before {
-  background-color: var(--mt-color-primary-light);
+  background-color: var(--mt-color-primar-dark);
 }
 .region--colored-background a.mt-button:hover,
 .region--colored-background .mt-button > a:hover,
