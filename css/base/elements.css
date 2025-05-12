@@ -1,9 +1,8 @@
-p a,
-p a:not([class]) {
+a,
+a:not([class]) {
   text-decoration: underline;
-  background-color: transparent;
 }
-p a:hover {
+a:hover {
   text-decoration: none;
 }
 .footer__section h4.title,
