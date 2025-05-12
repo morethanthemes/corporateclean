@@ -1,0 +1,15 @@
+{#
+/**
+ * @file
+ * Theme override for a breadcrumb trail.
+ *
+ * Available variables:
+ * - breadcrumb: Breadcrumb trail items.
+ */
+#}
+{% extends "@basecore/breadcrumb.html.twig" %}
+{% block subtheme_libraries %}
+  {{ attach_library('corporateclean/breadcrumb') }}
+{% endblock %}
+
+

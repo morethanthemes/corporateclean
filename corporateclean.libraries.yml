@@ -34,6 +34,12 @@ node-view-mode-card:
     component:
       css/components/node-view-mode-card.css: {}
 
+breadcrumb:
+  version: VERSION
+  css:
+    component:
+      css/components/breadcrumb.css: {}
+
 #####################
 #   Color Schemes   #
 #####################

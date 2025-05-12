@@ -1,0 +1,7 @@
+/**
+ * @file
+ * Styles for CorporateClean breadcrumbs.
+ */
+.breadcrumb a {
+  text-decoration: none;
+}
