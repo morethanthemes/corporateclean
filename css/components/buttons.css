@@ -9,6 +9,7 @@ input[type='button'],
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 0.9rem;
+  transition: all 0.25s ease-in-out;
 }
 a.mt-button:hover,
 .mt-button > a:hover,
@@ -17,6 +18,7 @@ button.mt-button:hover {
 }
 a.mt-button:hover,
 .mt-button > a:hover,
+.btn:hover,
 button.mt-button:hover,
 input[type='submit']:hover,
 input[type='reset']:hover,

@@ -1,6 +1,7 @@
 a,
 a:not([class]) {
   text-decoration: underline;
+  text-decoration-style: dotted;
 }
 a:hover {
   text-decoration: none;
