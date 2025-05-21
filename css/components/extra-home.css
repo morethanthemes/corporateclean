@@ -9,6 +9,14 @@
   font-weight: 300;
   max-width: 600px;
 }
+.service-card {
+  padding: 0 2rem;
+  border: none;
+  transition: transform 0.15s ease-in-out;
+}
+.service-card:hover {
+  transform: translateY(-2%);
+}
 .service-card h3 {
   font-size: 1.75rem;
   font-weight: 800;
