@@ -5,3 +5,22 @@
 .node--view-mode-card.region--default-background {
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
 }
+.mt-teaser-tile-card h4.node__title a {
+  text-decoration: none;
+  position: relative;
+  background-image: linear-gradient(
+    transparent calc(100% - 1px),
+    black calc(100% - 1px),
+    black 100%,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-position: 50% 100%;
+  padding-bottom: 1px;
+  transition: background-size 0.3s ease, border-bottom 0.2s ease;
+}
+.mt-teaser-tile-card h4.node__title a:hover {
+  background-size: 100% 100%;
+  border-bottom-color: transparent;
+}

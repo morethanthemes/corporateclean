@@ -39,3 +39,38 @@ input[type='reset'].mt-button--outline,
 input[type='button'].mt-button--outline {
   padding: 1rem 2rem;
 }
+a.mt-button.mt-button--external-link,
+.mt-button.mt-button.mt-button--external-link > a,
+button.mt-button.mt-button.mt-button--external-link {
+  position: relative;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+a.mt-button.mt-button--link,
+.mt-button.mt-button--link > a,
+button.mt-button.mt-button--link {
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+  display: inline;
+  border-bottom: 1px dotted transparent;
+  background-image: linear-gradient(
+    transparent calc(100% - 1px),
+    var(--mt-link-border-hover) calc(100% - 1px),
+    var(--mt-link-border-hover) 100%,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-position: 50% 100%;
+  transition: background-size 0.3s ease, border-bottom 0.2s ease;
+}
+a.mt-button.mt-button--link:hover,
+.mt-button.mt-button--link > a:hover,
+button.mt-button.mt-button--link:hover {
+  text-decoration: none;
+  background-color: transparent;
+  color: inherit;
+  background-size: calc(100% - 48px) 100%;
+  border-bottom-color: transparent;
+}
