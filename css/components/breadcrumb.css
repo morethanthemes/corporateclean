@@ -3,5 +3,25 @@
  * Styles for CorporateClean breadcrumbs.
  */
 .breadcrumb a {
+  color: inherit;
   text-decoration: none;
+  position: relative;
+  display: inline;
+  border-bottom: 1px dotted var(--mt-link-border);
+  background-image: linear-gradient(
+    transparent calc(100% - 1px),
+    var(--mt-link-border-hover) calc(100% - 1px),
+    var(--mt-link-border-hover) 100%,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-position: 50% 100%;
+  padding-bottom: 1px;
+  transition: background-size 0.3s ease, border-bottom 0.2s ease;
+}
+.breadcrumb a:hover {
+  color: inherit;
+  background-size: 100% 100%;
+  border-bottom-color: transparent;
 }
