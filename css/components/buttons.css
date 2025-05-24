@@ -4,7 +4,8 @@ button.mt-button,
 input[type='submit'],
 input[type='reset'],
 input[type='button'],
-.btn {
+.btn,
+a.button {
   padding: 1rem 2rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -13,12 +14,15 @@ input[type='button'],
 }
 a.mt-button:hover,
 .mt-button > a:hover,
-button.mt-button:hover {
+button.mt-button:hover,
+.btn:hover,
+a.button:hover {
   padding: 1rem 2rem;
 }
 a.mt-button:hover,
 .mt-button > a:hover,
 .btn:hover,
+a.button:hover,
 button.mt-button:hover,
 input[type='submit']:hover,
 input[type='reset']:hover,
