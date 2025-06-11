@@ -39,6 +39,14 @@ p a:hover {
   background-size: 100% 100%;
   border-bottom-color: transparent;
 }
+.klaro.klaro-theme-corporateclean p a:hover {
+  background-image: linear-gradient(
+    transparent calc(100% - 1px),
+    var(--mt-link-border-hover) calc(100% - 0px),
+    var(--mt-link-border-hover) 100%,
+    transparent 100%
+  );
+}
 .footer__section h4.title,
 .footer__section h2.title,
 .footer__section nav > h2,
