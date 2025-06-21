@@ -9,6 +9,9 @@
   --mt-link-border: rgba(255, 255, 255, 0.4);
   --mt-link-border-hover: #fff;
 }
+.klaro.klaro-theme-corporateclean {
+  font-size: var(--mt-text-size);
+}
 a,
 a:not([class]) {
   text-decoration: none;

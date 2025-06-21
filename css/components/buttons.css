@@ -3,7 +3,7 @@
   --klaro-button-border: solid none;
   --klaro-button-border-radius: var(--mt-button-border-radius);
   --klaro-button-padding: 1rem 2rem;
-  --klaro-button-font-size: 0.9rem;
+  --klaro-button-font-size: 1rem;
   --klaro-button-font-weight: 400;
   --klaro-button-line-height: 1.125;
   --klaro-button-bg-hover: var(--mt-color-primary-light);
@@ -25,7 +25,7 @@ input[type='button'],
   padding: 1rem 2rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-size: 0.9rem;
+  font-size: 1rem;
   transition: all 0.25s ease-in-out;
   font-weight: 400;
 }
@@ -78,7 +78,7 @@ button.mt-button.mt-button--link,
 a.button {
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 1.125;
   color: inherit;
