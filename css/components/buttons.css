@@ -1,19 +1,8 @@
 .klaro.klaro-theme-corporateclean {
-  --klaro-button-bg: var(--mt-color-primary);
   --klaro-button-border: solid none;
-  --klaro-button-border-radius: var(--mt-button-border-radius);
   --klaro-button-padding: 1rem 2rem;
-  --klaro-button-font-size: 1rem;
   --klaro-button-font-weight: 400;
-  --klaro-button-line-height: 1.125;
-  --klaro-button-bg-hover: var(--mt-color-primary-light);
-  --klaro-button-text-color-hover: var(--mt-color-primary-contrast);
   --klaro-button-border-hover: none;
-  --klaro-button-focus-outline: 1px solid var(--mt-color-primary-light);
-  --klaro-button-focus-outline-offset: 1px;
-  --green1: var(--mt-color-primary);
-  --green2: var(--mt-color-primary);
-  --green3: var(--mt-color-primary);
 }
 a.mt-button,
 .mt-button > a,
@@ -25,7 +14,6 @@ input[type='button'],
   padding: 1rem 2rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-size: 1rem;
   transition: all 0.25s ease-in-out;
   font-weight: 400;
 }
@@ -78,7 +66,6 @@ button.mt-button.mt-button--link,
 a.button {
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-size: 1rem;
   font-weight: 400;
   line-height: 1.125;
   color: inherit;
@@ -94,6 +81,8 @@ a.button {
   background-size: 0% 100%;
   background-position: 50% 100%;
   transition: background-size 0.3s ease, border-bottom 0.2s ease;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 a.mt-button.mt-button--link:hover,
 .mt-button.mt-button--link > a:hover,
